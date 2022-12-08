@@ -217,6 +217,10 @@ class MainPage extends Component {
         },()=>{
         })
     }
+    openNewURL=(url)=>{
+        console.log(url)
+        window.open(url)
+    }
     render() {
         return (
             <div className="baseStyle">
@@ -240,7 +244,10 @@ class MainPage extends Component {
                             itemLayout="horizontal"
                             dataSource={this.state.listData}
                             renderItem={(item) => (
-                                <List.Item>
+                                <List.Item
+                                    onClick={() => {
+                                        this.openNewURL("https://github.com/" +item.username)
+                                    }}>
                                     <List.Item.Meta
                                         avatar={<Avatar src={item.avatarUrl}/>}
                                         title={<a>{item.username}</a>}
