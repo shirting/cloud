@@ -262,20 +262,21 @@ class MainPage extends Component {
                         <div className="title1" >用户关系图</div>
                         <div className="searchText">
                             <InputNumber
-                                min={1}
+                                min={5}
                                 max={1000}
                                 value={this.state.tmpNum}
-                                size={"small"}
+                                size={"middle"}
                                 controls={false}
+                                className="InputNumber"
                                 onChange={this.changeNum}/>
                             <Button
                                 shape="circle"
+                                type="primary"
                                 icon={<SearchOutlined/>}
                                 onClick={() => {
                                     this.onSearch();
                                 }}
                             >
-                                搜索
                             </Button>
                         </div>
                         <Spin style={{display:this.state.loading?"inline":"none"}} size={"large"} className="Spin" />

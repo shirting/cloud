@@ -77,3 +77,9 @@
 .ant-list-split .ant-list-item {
     border-bottom: 0px
 }
+.InputNumber{
+    margin-right:10px;
+    background-color:rgba(36,36,36,.7);
+    color:white;
+    border: 1px solid #1890ff;
+}
