@@ -10,6 +10,7 @@ import { Input, Space } from 'antd';
 import { Button, InputNumber } from 'antd';
 import Sider from "antd/es/layout/Sider";
 import { SearchOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 const { Search } = Input;
 class MainPage extends Component {
     constructor(prop) {
@@ -21,7 +22,8 @@ class MainPage extends Component {
             itemList:[{}],
             curItem:null,
             totalNum:20,
-            tmpNum:20
+            tmpNum:20,
+            loading:false
         }
     }
     getItem(label, key, icon, children, theme) {
@@ -124,6 +126,7 @@ class MainPage extends Component {
                     curveness: 0.3,
                     opacity: 0.7,
                     color:color[random]
+                    // color:"white"
                 }
                 links.push(obj)
             }
@@ -134,7 +137,8 @@ class MainPage extends Component {
                     }
                     that.setState({
                         GraphChartData:node,
-                        GraphChartLinks:links
+                        GraphChartLinks:links,
+                        loading:false
                     })
                 });
             }
@@ -186,7 +190,8 @@ class MainPage extends Component {
     }
     onClick = (e) => {
         this.setState({
-            curItem:e.key
+            curItem:e.key,
+            loading:true
         },()=>{
             // 排行榜前十
             this.getListData()
@@ -197,7 +202,8 @@ class MainPage extends Component {
     onSearch = () => {
         var value=this.state.tmpNum
         this.setState({
-            totalNum:value
+            totalNum:value,
+            loading:true
         },()=>{
             // 排行榜前十
             this.getListData()
@@ -264,7 +270,10 @@ class MainPage extends Component {
                                 搜索
                             </Button>
                         </div>
-                        <GraphChart data={this.state.GraphChartData} links={this.state.GraphChartLinks}></GraphChart>
+                        <Spin style={{display:this.state.loading?"inline":"none"}} size={"large"} className="Spin" />
+                        <div style={{display:this.state.loading?"none":"inline"}}  className="Spin" >
+                            <GraphChart data={this.state.GraphChartData} links={this.state.GraphChartLinks}></GraphChart>
+                        </div>
                     </div>
                 </div>
             </div>

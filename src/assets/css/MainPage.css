@@ -37,6 +37,12 @@
     background-image: url(../images/word_cloud.png);
     background-size: 100% 100%;
 }
+.baseStyle .Spin{
+    display:inline;
+    float:left;
+    width:100%;
+    height:580px;
+}
 .baseStyle .searchText{
     display:inline;
     float:right;
@@ -54,4 +60,12 @@
     color:white;
     padding:7px 0px 10px 0px;
     text-align: left;
+}
+
+.ant-spin-dot {
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin: 25%;
 }
