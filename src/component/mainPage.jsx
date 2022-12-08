@@ -5,57 +5,23 @@ import GraphChart from "./GraphChart";
 import { Avatar, List } from 'antd';
 import {Layout, Menu} from "antd";
 import {Content, Header} from "antd/es/layout/layout";
+import { AudioOutlined } from '@ant-design/icons';
+import { Input, Space } from 'antd';
+import { Button, InputNumber } from 'antd';
 import Sider from "antd/es/layout/Sider";
+import { SearchOutlined } from '@ant-design/icons';
+const { Search } = Input;
 class MainPage extends Component {
     constructor(prop) {
         super(prop);
         this.state = {
-            listData: [
-                {
-                    name: 'Ant Design Title 1',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 2',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 3',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 4',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 5',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 6',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 7',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 8',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 9',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                },
-                {
-                    name: 'Ant Design Title 10',
-                    url: "https://avatars.githubusercontent.com/u/44483550?v=4 "
-                }
-            ],
+            listData: [],
             GraphChartData: [],
             GraphChartLinks:[],
             itemList:[{}],
-            curItem:null
+            curItem:null,
+            totalNum:20,
+            tmpNum:20
         }
     }
     getItem(label, key, icon, children, theme) {
@@ -112,7 +78,7 @@ class MainPage extends Component {
         var that=this;
         axios.post(axios.defaults.baseURL+"/graphx/relation", {
                 "orgName": this.state.curItem,
-                "total": 20
+                "total": this.state.totalNum
             }
         ).then((res) => {
             var data={"node":[],"edge":[]}
@@ -143,18 +109,27 @@ class MainPage extends Component {
                 };
                 node.push(obj)
             }
+            var tmpname=data.edge[0][0];
+            var random=parseInt(Math.random()*9);
             for(var i=0;i<data.edge.length;i++){
+                if(tmpname!=data.edge[i][0]){
+                    tmpname=data.edge[i][0]
+                    random=parseInt(Math.random()*9);
+                }
                 var obj={};
                 obj.source=data.edge[i][0]
                 obj.target=data.edge[i][1]
+                obj.lineStyle= {
+                    width: random/9*4,
+                    curveness: 0.3,
+                    opacity: 0.7,
+                    color:color[random]
+                }
                 links.push(obj)
             }
-            console.log(piclist)
             if(piclist.length>0){
                 Promise.all(piclist).then(images => {
-                    console.log("Promise: "+images.length)
                     for (let i = 0, len = node.length; i < len; i++) {
-                        console.log(node[i])
                         node[i].symbol = 'image://' + images[i];
                     }
                     that.setState({
@@ -174,7 +149,6 @@ class MainPage extends Component {
             img.src = imgSrc;
             img.crossOrigin = 'true';
             img.onload = function () {
-                console.log("fun")
                 // 设置图形宽高比例
                 let center = {
                     x: img.width / 2,
@@ -220,6 +194,23 @@ class MainPage extends Component {
             this.getGraphChartData()
         })
     };
+    onSearch = () => {
+        var value=this.state.tmpNum
+        this.setState({
+            totalNum:value
+        },()=>{
+            // 排行榜前十
+            this.getListData()
+            //用户关系图
+            this.getGraphChartData()
+        })
+    }
+    changeNum=(value)=>{
+        this.setState({
+            tmpNum:value
+        },()=>{
+        })
+    }
     render() {
         return (
             <div className="baseStyle">
@@ -238,6 +229,7 @@ class MainPage extends Component {
                 <div className="mainStyle">
                     {/*前十用户排行榜*/}
                     <div className="list">
+                        <div className="title" >用户排行榜</div>
                         <List
                             itemLayout="horizontal"
                             dataSource={this.state.listData}
@@ -253,6 +245,25 @@ class MainPage extends Component {
                     </div>
                     {/*关系图*/}
                     <div className="dynamic-sort-chart">
+                        <div className="title1" >用户关系图</div>
+                        <div className="searchText">
+                            <InputNumber
+                                min={1}
+                                max={1000}
+                                value={this.state.tmpNum}
+                                size={"small"}
+                                controls={false}
+                                onChange={this.changeNum}/>
+                            <Button
+                                shape="circle"
+                                icon={<SearchOutlined/>}
+                                onClick={() => {
+                                    this.onSearch();
+                                }}
+                            >
+                                搜索
+                            </Button>
+                        </div>
                         <GraphChart data={this.state.GraphChartData} links={this.state.GraphChartLinks}></GraphChart>
                     </div>
                 </div>

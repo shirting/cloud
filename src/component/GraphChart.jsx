@@ -16,10 +16,9 @@ class GraphChart extends Component {
     }
 
     componentWillReceiveProps(props) {
-        // console.log("componentWillReceiveProps")
         var option= {
             title: {
-                text: '用户关系图'
+                text: null
             },
             tooltip: {},
             animationDurationUpdate: 1500,
@@ -47,15 +46,9 @@ class GraphChart extends Component {
                         }
                     },
                     roam: true,
-                    lineStyle: {
-                        width: 0.5,
-                        curveness: 0.3,
-                        opacity: 0.7
-                    }
                 }
             ]
         };
-        console.log(option)
         chart.setOption(option)
     }
 
@@ -65,7 +58,7 @@ class GraphChart extends Component {
         //新建一个空数据的chart
         var option = {
             title: {
-                text: '用户关系图'
+                text: null
             },
             tooltip: {},
             animationDurationUpdate: 1500,
@@ -84,11 +77,6 @@ class GraphChart extends Component {
                     edgeLabel: {
                         fontSize: 20
                     },
-                    lineStyle: {
-                        width: 0.5,
-                        curveness: 0.3,
-                        opacity: 0.7
-                    }
                 }
             ]
         };

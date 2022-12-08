@@ -21,7 +21,7 @@
     margin:1% 2%;
     width:250px;
     height:660px;
-    padding:70px 30px 20px 30px;
+    padding:30px 30px 20px 30px;
     background: no-repeat;
     background-image: url(../images/word_cloud.png);
     background-size: 100% 100%;
@@ -32,8 +32,26 @@
     margin:1%;
     width:1090px;
     height:660px;
-    padding:80px 30px 20px 30px;
+    padding:20px 30px 20px 30px;
     background: no-repeat;
     background-image: url(../images/word_cloud.png);
     background-size: 100% 100%;
+}
+.baseStyle .searchText{
+    display:inline;
+    float:right;
+    padding:4px 50px 10px 0px;
+}
+.baseStyle .title{
+    font-size: 10px;
+    color:white;
+    padding:0px 20px 0px 0px;
+}
+.baseStyle .title1{
+    display:inline;
+    float:left;
+    font-size: 18px;
+    color:white;
+    padding:7px 0px 10px 0px;
+    text-align: left;
 }
