@@ -219,7 +219,6 @@ class MainPage extends Component {
         })
     }
     openNewURL=(url)=>{
-        console.log(url)
         window.open(url)
     }
     render() {
