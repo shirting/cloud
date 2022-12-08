@@ -56,7 +56,8 @@ class MainPage extends Component {
             })
             that.setState({
                 itemList:items,
-                curItem:data[0]
+                curItem:data[0],
+                loading:true
             },()=>{
                 // 排行榜前十
                 that.getListData()

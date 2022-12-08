@@ -46,6 +46,12 @@ class GraphChart extends Component {
                         }
                     },
                     roam: true,
+                    tooltip:{
+                        formatter: function (params, ticket, callback) {
+                            var value="用户名："+params.data.name+"  关注数："+params.data.symbolSize
+                            return value
+                        }
+                    }
                 }
             ]
         };
@@ -81,6 +87,16 @@ class GraphChart extends Component {
             ]
         };
         myChart.setOption(option)
+        myChart.on('click', function (param){
+            //获取节点点击的数组序号
+            console.log(param)
+            if (param.dataType == 'node') {
+                var url="https://github.com/" +param.name
+                window.open(url)
+            } else {
+
+            }
+        });
         this.setState({
             chart:myChart,
             option:option
